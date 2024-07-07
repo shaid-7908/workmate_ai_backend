@@ -14,11 +14,15 @@ from models.models_schema import Chat_schema
 from typing import List
 import os
 from dotenv import load_dotenv
+import json
 from google.cloud import bigquery
+load_dotenv()
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './gb-key.json'
+#so.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './gb-key.json'
+bq_key_json = os.getenv("BQ_KEY_JSON")
 
-gbq_client = bigquery.Client()
+bq_key = json.loads(bq_key_json)
+gbq_client = bigquery.Client.from_service_account_info(bq_key)
 
 knowledgeBaseRouter = APIRouter(
     prefix="/sql_chain",

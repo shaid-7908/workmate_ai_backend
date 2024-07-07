@@ -1,8 +1,10 @@
 #This file deals with SQL chain and Google-bigquery integration
 
 import os
+import json
 from dotenv import load_dotenv
 from google.cloud import bigquery
+
 #Langchain imports
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -14,11 +16,16 @@ from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain_groq import ChatGroq
 from dbConfig.database import schema_info_collection
 load_dotenv()
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './gb-key.json'
+#os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = './gb-key.json'
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ['LANGCHAIN_API_KEY'] = os.getenv("LANGCHAIN_API_KEY")
 groq_api_key = os.getenv("GROQC_API_KEY")
-gbq_client = bigquery.Client()
+
+bq_key_json = os.getenv("BQ_KEY_JSON")
+
+bq_key = json.loads(bq_key_json)
+gbq_client = bigquery.Client.from_service_account_info(bq_key)
+
 
 full_data_set_id ='bigquery-public-data.thelook_ecommerce'
 schema_cache = None

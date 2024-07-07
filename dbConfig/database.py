@@ -1,6 +1,6 @@
 from pymongo.mongo_client import MongoClient,_MongoClientErrorHandler
 
-client = MongoClient('mongodb://localhost:27017')
+client = MongoClient('mongodb+srv://Job-portal:rehan1234@rehan.cycatda.mongodb.net/?retryWrites=true&w=majority&appName=Rehan')
 
 #initalize our workmatedb with db
 db = client.workmate
@@ -9,7 +9,7 @@ collection_name = db["todo"]
 
 #gets the collection of Users from workmate db in mongodb
 user_collection = db["Users"]
-
+ 
 
 document_details_collection = db["Knowledge_base"]
 
